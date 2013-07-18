@@ -5,14 +5,18 @@
   var Router = Backbone.Router.extend({
     
     routes: {
-      '': 'main',
+      '': 'login'
     },
 
-    main: function() {
-      new views.Main({
+    initialize: function(){
+
+    },
+
+    login: function(){
+      new views.Login({
         el: $('#container')
       });
-    },
+    }
 
   });
 

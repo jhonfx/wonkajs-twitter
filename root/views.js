@@ -8,8 +8,8 @@
     return hbs.compile($('#root-' + name + '-template').html());
   }
 
-  views.Main = Bb.View.extend({
-    template: getTemplate('main'),
+  views.Login = Bb.View.extend({
+    template: getTemplate('login'),
     initialize: function() {
       var me = this;
       me.render();
