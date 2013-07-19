@@ -40,7 +40,8 @@
         "handlebars",
         "globalize",
         "helpers",
-        "install"
+        "install",
+        "jsOAuth"
       ],
       "main_files": [
         "listeners",

@@ -18,6 +18,14 @@
       var me = this;
       me.$el.html(me.template());
       return me;
+    },
+    events: {
+      'submit .form-signin': 'login'
+    },
+    login: function(e) {
+      //default event wont trigger
+      e.preventDefault();
+
     }
   });
 
