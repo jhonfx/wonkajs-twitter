@@ -4,6 +4,7 @@
   var collections = namespace.collections;
   var views = namespace.views;
 
+
   var getTemplate = function(name) {
     return hbs.compile($('#root-' + name + '-template').html());
   }
@@ -33,8 +34,7 @@
 
       //for oauth instance
       var config = {
-        // callbackUrl: 'http%3A%2F%2Flocalhost%3A9300%2Fhome',
-        // callbackUrl: 'http://localhost:9300/home',
+        callbackUrl: 'http://localhost:9300/#home',
         consumerKey: myConsumerKey,
         consumerSecret: myConsumerSecret
       };
@@ -44,11 +44,13 @@
 
       //Test -  this should not trigger, because the callback Url
       function success(data) {
-        console.log('finish', data.text );
-        window.open('https://twitter.com/oauth/authorize?'+data.text);
+        console.log('finish', data);
+        // open the windo to accept form
+        window.open ('https://twitter.com/oauth/authorize?' + data.text);
       }
 
       //fails
+
       function failure(data) {
         console.log('Alert!!... something went wrong', data);
       }
@@ -61,7 +63,7 @@
         failure: failure,
         headers: {
           'oauth_nonce': 'f050b86ed6389ce2b06595fe17060a50',
-          // 'oauth_callback': 'http%3A%2F%2Flocalhost%3A9300%2Fhome',
+          // 'oauth_callback': 'http%3A%2F%2F127.0.0.1%3A9300%2F%23home',
           'oauth_signature_method': 'HMAC-SHA1',
           'oauth_timestamp': '1374428822',
           'oauth_consumer_key': myConsumerKey,
@@ -73,6 +75,20 @@
       oauth.request(options);
 
     }
+  });
+
+  views.Home = Bb.View.extend({
+    template: getTemplate('home'),
+    initialize: function() {
+      var me = this;
+      me.render();
+    },
+    render: function() {
+      var me = this;
+      me.$el.html(me.template());
+      window.myaccess= me.$el.html();
+      return me;
+    },
   });
 
 })(root);

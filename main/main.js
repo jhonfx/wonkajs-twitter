@@ -1,5 +1,5 @@
 window.main = function() {
-  
-  Backbone.history.start({pushState: true});
+	//{pushState: true}
+	Backbone.history.start();
 
 };
