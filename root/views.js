@@ -28,25 +28,29 @@
       e.preventDefault();
 
       //Cheked with twitter dev api
-      var consumerKey = $('#consumerKey').val();
-      var accessTokenKey = $('#accessTokenKey').val();
+      var myConsumerKey = $('#consumerKey').val();
+      var myConsumerSecret = $('#consumerSecretKey').val();
 
       //for oauth instance
       var config = {
-        callbackUrl: 'http://localhost:9300/home'
+        // callbackUrl: 'http%3A%2F%2Flocalhost%3A9300%2Fhome',
+        // callbackUrl: 'http://localhost:9300/home',
+        consumerKey: myConsumerKey,
+        consumerSecret: myConsumerSecret
       };
 
       //create oauth instance
-      var oauth = OAuth(config);
+      var oauth = new OAuth(config);
 
       //Test -  this should not trigger, because the callback Url
       function success(data) {
-        console.log('finish');
+        console.log('finish', data.text );
+        window.open('https://twitter.com/oauth/authorize?'+data.text);
       }
 
       //fails
       function failure(data) {
-        console.log('Alert!!... something went wrong');
+        console.log('Alert!!... something went wrong', data);
       }
 
       //Optios for the oauth
@@ -56,13 +60,13 @@
         success: success,
         failure: failure,
         headers: {
-          'oauth_consumer_key': consumerKey,
-          'oauth_nonce': "be4e06145df48aa50156e379b3816944",
-          'oauth_signature': "s4Q4Q76MCP8wSuqvSLA3G2pRLXY%3D",
-          'oauth_signature_method': "HMAC-SHA1",
-          'oauth_timestamp': "1374382575",
-          'oauth_token': accessTokenKey,
-          'oauth_version': "1.0"
+          'oauth_nonce': 'f050b86ed6389ce2b06595fe17060a50',
+          // 'oauth_callback': 'http%3A%2F%2Flocalhost%3A9300%2Fhome',
+          'oauth_signature_method': 'HMAC-SHA1',
+          'oauth_timestamp': '1374428822',
+          'oauth_consumer_key': myConsumerKey,
+          'oauth_signature': 'O5ZOVSosgWNRC7HOI4eAIRLTREY%3D',
+          'oauth_version': '1.0'
         }
       };
 
