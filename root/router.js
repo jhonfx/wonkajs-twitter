@@ -6,16 +6,17 @@
 
     routes: {
       '': 'login',
-      'home?oauth_token=:token&oauth_verifier=:verifier': 'home'
+      // 'oauth?oauth_token=:token&oauth_verifier=:verifier': 'oauth'
+      'oauth?oauth_token=:token&oauth_verifier=:verifier': 'oauth'
     },
 
     initialize: function(){
 
     },
 
-    home: function(token,verifier){
-      console.log(token,verifier);
-      new views.Home({
+    oauth: function(){
+      console.log('H');
+      new views.Oauth({
         el: $('#container')
       });
     },

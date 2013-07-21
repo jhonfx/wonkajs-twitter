@@ -10,19 +10,24 @@
   }
 
   views.Login = Bb.View.extend({
+
     template: getTemplate('login'),
+
     initialize: function() {
       var me = this;
       me.render();
     },
+
     render: function() {
       var me = this;
       me.$el.html(me.template());
       return me;
     },
+
     events: {
       'submit .form-signin': 'login'
     },
+
     login: function(e) {
       console.log('connecting...')
       //default event wont trigger
@@ -34,7 +39,7 @@
 
       //for oauth instance
       var config = {
-        callbackUrl: 'http://localhost:9300/#home',
+        callbackUrl: 'http://localhost:9300/#oauth',
         consumerKey: myConsumerKey,
         consumerSecret: myConsumerSecret
       };
@@ -43,10 +48,11 @@
       var oauth = new OAuth(config);
 
       //Test -  this should not trigger, because the callback Url
+
       function success(data) {
         console.log('finish', data);
         // open the windo to accept form
-        window.open ('https://twitter.com/oauth/authorize?' + data.text);
+        window.open('https://twitter.com/oauth/authorize?' + data.text );
       }
 
       //fails
@@ -73,12 +79,12 @@
       };
 
       oauth.request(options);
-
     }
+
   });
 
-  views.Home = Bb.View.extend({
-    template: getTemplate('home'),
+  views.Oauth = Bb.View.extend({
+    template: getTemplate('oauth'),
     initialize: function() {
       var me = this;
       me.render();
@@ -86,9 +92,8 @@
     render: function() {
       var me = this;
       me.$el.html(me.template());
-      window.myaccess= me.$el.html();
       return me;
-    },
+    }
   });
 
 })(root);
