@@ -9,26 +9,26 @@ if (!App.has('pkg')) {
   var xhr = null;
   var activexmodes = ["Msxml2.XMLHTTP", "Microsoft.XMLHTTP"];
   if (window.ActiveXObject) {
-    for (var i=0; i < activexmodes.length; i++) {
+    for (var i = 0; i < activexmodes.length; i++) {
       try {
         xhr = new ActiveXObject(activexmodes[i]);
-      } catch(e) {}
+      } catch (e) {}
     }
   } else {
     xhr = new XMLHttpRequest();
   }
   xhr.open('GET', 'package.json', false);
   xhr.send(null);
-  App.set('pkg', JSON.parse(xhr.responseText));  
+  App.set('pkg', JSON.parse(xhr.responseText));
 }
 
 //Set languages
 if (App.has('pkg.settings.i18n.languages')) {
-  if(window[App.pkg.settings.storage_engine].hasOwnProperty(App.pkg._id + '-language')) {
+  if (window[App.pkg.settings.storage_engine].hasOwnProperty(App.pkg._id + '-language')) {
     setLanguage(window[App.pkg.settings.storage_engine][App.pkg._id + '-language']);
   } else {
     setLanguage(App.pkg.settings.i18n.languages[0]);
-  }  
+  }
 }
 
 function formToJSON(selector) {
@@ -41,14 +41,15 @@ function formToJSON(selector) {
         json[item.name] = [json[item.name], item.value];
       }
     } else {
-      json[item.name] = item.value;  
+      json[item.name] = item.value;
     }
-    
+
   });
   return json;
 }
 
 //API uri builder
+
 function uri() {
   var uri = App.pkg.settings.api;
   _.each(arguments, function(item) {
@@ -58,16 +59,17 @@ function uri() {
 };
 
 // Init the I18n with language specified
+
 function setLanguage(language) {
   window[App.pkg.settings.storage_engine][App.pkg._id + '-language'] = language;
 
   var xhr = null;
   var activexmodes = ["Msxml2.XMLHTTP", "Microsoft.XMLHTTP"];
-  if(window.ActiveXObject) {
-    for(var i = 0; i < activexmodes.length; i++) {
+  if (window.ActiveXObject) {
+    for (var i = 0; i < activexmodes.length; i++) {
       try {
         xhr = new ActiveXObject(activexmodes[i]);
-      } catch(e) {}
+      } catch (e) {}
     }
   } else {
     xhr = new XMLHttpRequest();
@@ -75,7 +77,7 @@ function setLanguage(language) {
   xhr.open('GET', 'languages/' + language + '.json', false);
   xhr.send(null);
 
-  if(xhr.status == 200 || xhr.status == 201) {
+  if (xhr.status == 200 || xhr.status == 201) {
     var response = JSON.parse(xhr.responseText);
     Globalize.culture(language);
     Globalize.addCultureInfo(language, {
@@ -85,17 +87,18 @@ function setLanguage(language) {
 };
 
 //Create a new namespace
+
 function namespace() {
   var args = Array.prototype.slice.call(arguments);
   var setComponents = function(context, first, rest) {
-    if(!context[first]) {
+    if (!context[first]) {
       context[first] = {
         models: {},
         collections: {},
         views: {},
       };
     }
-    if(rest.length) {
+    if (rest.length) {
       setComponents(context[first], _.first(rest), _.rest(rest));
     }
   };
@@ -103,6 +106,7 @@ function namespace() {
 };
 
 //Return a localized string
+
 function __(stringToTranslate) {
   return Globalize.localize(stringToTranslate, Globalize.culture()) || stringToTranslate;
 };
@@ -113,6 +117,7 @@ Handlebars.registerHelper("__", function(string) {
 });
 
 //Authentication validation
+
 function isAuthenticated() {
   var storageEngine = App.pkg.settings.storage_engine;
   var name = App.pkg._id;
@@ -152,6 +157,17 @@ window.isMobile = {
   }
 };
 
+window.getParams = function() {
+  var object = {},
+    hash;
+  var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+  for (var i = 0; i < hashes.length; i++) {
+    hash = hashes[i].split('=');
+    object[hash[0]] = hash[1];
+  }
+  return object;
+}
+
 //Backbone Router extensions
 _.extend(Backbone.Router.prototype, {
   route: function(route, name, callback) {
@@ -164,14 +180,22 @@ _.extend(Backbone.Router.prototype, {
       if (loginRequired.indexOf(fragment) != -1) {
         if (!isAuthenticated()) {
           var login = App.pkg.settings.login_route || "#login";
-          Backbone.history.navigate(login, {trigger: true}, {replace: true});
+          Backbone.history.navigate(login, {
+            trigger: true
+          }, {
+            replace: true
+          });
           return false;
         }
       }
       if (logoutRequired.indexOf(fragment) != -1) {
         if (isAuthenticated()) {
           var home = App.pkg.settings.home_route || "#home";
-          Backbone.history.navigate(home, {trigger: true}, {replace: true});
+          Backbone.history.navigate(home, {
+            trigger: true
+          }, {
+            replace: true
+          });
           return false;
         }
       }

@@ -86,6 +86,7 @@
   views.Oauth = Bb.View.extend({
     template: getTemplate('oauth'),
     initialize: function() {
+      this.oauth = window.getParams();
       var me = this;
       me.render();
     },

@@ -7,7 +7,7 @@
     routes: {
       '': 'login',
       // 'oauth?oauth_token=:token&oauth_verifier=:verifier': 'oauth'
-      'oauth?oauth_token=:token&oauth_verifier=:verifier': 'oauth'
+      'oauth?*': 'oauth'
     },
 
     initialize: function(){
@@ -15,7 +15,6 @@
     },
 
     oauth: function(){
-      console.log('H');
       new views.Oauth({
         el: $('#container')
       });
