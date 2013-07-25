@@ -3,13 +3,22 @@
   var views = namespace.views;
 
   var Router = Backbone.Router.extend({
-    
+
     routes: {
-      '': 'login'
+      '': 'login',
+      // 'oauth?oauth_token=:token&oauth_verifier=:verifier': 'oauth'
+      'oauth?oauth_token=:token&oauth_verifier=:verifier': 'oauth'
     },
 
     initialize: function(){
 
+    },
+
+    oauth: function(){
+      console.log('H');
+      new views.Oauth({
+        el: $('#container')
+      });
     },
 
     login: function(){
