@@ -16,6 +16,7 @@
     initialize: function() {
       var me = this;
       me.render();
+      me.connec();
     },
 
     render: function() {
@@ -24,15 +25,8 @@
       return me;
     },
 
-    events: {
-      'submit .form-signin': 'login'
-    },
-
-    login: function(e) {
-      console.log('connecting...')
-      //default event wont trigger
-      e.preventDefault();
-
+    connec: function() {
+      var me = this;
       //Cheked with twitter dev api
       var myConsumerKey = $('#consumerKey').val();
       var myConsumerSecret = $('#consumerSecretKey').val();
@@ -47,19 +41,17 @@
       //create oauth instance
       var oauth = new OAuth(config);
 
-      //Test -  this should not trigger, because the callback Url
-
+      //success
       function success(data) {
-        console.log('finish', data);
-        // open the windo to accept form
-        window.open('https://twitter.com/oauth/authorize?' + data.text );
-      }
+        console.log('success, ready for authorize');
+        me.changeButton('primary', 'https://twitter.com/oauth/authorize?' + data.text, 'Authorize twitter app');
+      };
 
       //fails
-
       function failure(data) {
-        console.log('Alert!!... something went wrong', data);
-      }
+        console.log('fail, give feedback');
+        me.changeButton('danger', '', 'Unauthorized request');
+      };
 
       //Optios for the oauth
       var options = {
@@ -79,7 +71,26 @@
       };
 
       oauth.request(options);
-    }
+    },
+
+    events: {
+      'submit .form-api-keys': 'checkKeys'
+    },
+
+    checkKeys: function(event) {
+      event.preventDefault();
+      var me = this;
+      me.changeButton('inverse','', 'Verifying the apps keys...');
+      me.connec();
+    },
+
+    changeButton: function(btn_class, href, msg) {
+      var btn = $('.twitter-oauth-button');
+      (btn.hasClass('btn-inverse')) ? btn.removeClass('btn-inverse') : btn.removeClass('btn-danger') ;
+      btn.addClass('btn-' + btn_class);
+      btn.attr('href', href);
+      btn.html(msg);
+    },
 
   });
 

@@ -1,12 +1,21 @@
 <script type="text/x-handlebars-template" id="root-login-template">
   <div class="container-signin">
-    <form class="form-signin">
-      <h2 class="form-signin-heading">Demo twitter login</h2>
-      <label for="consumerKey">Consumet Key</label>
+    <div>
+      <h2>Demo twitter login</h2>
+    </div>
+    <div class="container-content container-left">
+      <a href="" class="btn btn-inverse btn-small twitter-oauth-button">verifying the apps keys...</a>
+    </div>
+    <div class="container-content container-right">
+    <form class="form-api-keys">
+      <label for="consumerKey">Consumer Key:</label>
       <input type="text" class="input-block-level" name="consumerKey" id="consumerKey" placeholder="Consumer key" value="5ucwBxEoeztEzOOeulDcg">
-      <label for="consumerSecretKey">Consumer Secret Key</label>
+      <label for="consumerSecretKey">Consumer Secret Key:</label>
       <input type="text" class="input-block-level" name="consumerSecretKey" id="consumerSecretKey" placeholder="Access token" value="G2wbMVFrirXJFZoxbeP6JL2A9ZYAz6s32ke1ZX6FEg">
-      <button class="btn btn-large btn-primary" type="submit">Sign in</button>
+      <div class="container-right keys-button">
+        <input type="submit" class="btn btn-small" name="" value="Check Keys">
+      </div>
     </form>
+    </div>
   </div>
 </script>
